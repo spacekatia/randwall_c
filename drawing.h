@@ -4,15 +4,15 @@
 #include "bmp.h"
 
 typedef struct {
-    unsigned int width;
-    unsigned int height;
-    // unsigned int depth;
-    Pixel data[];
+	unsigned int width;
+	unsigned int height;
+	// unsigned int depth;
+	Pixel data[];
 } Image;
 
 typedef struct Point{
-    float x;
-    float y;
+	float x;
+	float y;
 } Point;
 
 
