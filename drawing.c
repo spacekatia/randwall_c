@@ -7,7 +7,9 @@
 
 void point_i(Image *image, unsigned int x, unsigned int y, uint8_t r, uint8_t g, uint8_t b) {
 	if (x >= image->width || y >= image->height) {
+		#ifdef DEBUG 
 		fprintf(stderr, "Attempting to plot integer point out of bounds\n");
+		#endif
 		return;
 	}
 
@@ -18,7 +20,9 @@ void point_i(Image *image, unsigned int x, unsigned int y, uint8_t r, uint8_t g,
 
 void point_f(Image *image, float x, float y, uint8_t r, uint8_t g, uint8_t b) {
 	if (x < 0.0 || x > 1.0 || y < 0.0 || y > 1.0) {
+		#ifdef DEBUG 
 		fprintf(stderr, "Attempting to plot point out of bounds\n");
+		#endif
 		return;
 	}
 
@@ -211,9 +215,11 @@ void left_triangle_f(Image *image, Point p0, Point p1, Point p2, uint8_t r, uint
 	float current_y0 = p0.y;
 	float current_y1 = p0.y;
 
+	#ifdef DEBUG
 	printf("p0: %f, %f \n", p0.x, p0.y);
 	printf("p1: %f, %f \n", p1.x, p1.y);
 	printf("p2: %f, %f \n", p2.x, p2.y);
+	#endif
 	for (int x = p0.x; x <= p1.x; x++)
 	{
 		// drawLine((int)curx1, scanlineY, (int)curx2, scanlineY);
