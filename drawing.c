@@ -120,7 +120,7 @@ void line_f(Image *image, float x0, float y0, float x1, float y1, uint8_t r, uin
 	// main loop
 
 	if (steep) {
-		for (float x = x_pixel1 + 1.0; x < x_pixel2 - 1; x += 1.0) {
+		for (float x = x_pixel1 + 1.0; x < x_pixel2; x += 1.0) {
 				uint8_t r_intensity = (uint8_t)(255.0 * rfpart(y_intersect));
 				uint8_t intensity = (uint8_t)(255.0 * fpart(y_intersect));
 
@@ -130,7 +130,7 @@ void line_f(Image *image, float x0, float y0, float x1, float y1, uint8_t r, uin
 				y_intersect += gradient;
 		}
 	} else {
-		for (float x = x_pixel1 + 1.0; x < x_pixel2 - 1; x += 1.0) {
+		for (float x = x_pixel1 + 1.0; x < x_pixel2; x += 1.0) {
 				uint8_t r_intensity = (uint8_t)(255.0 * rfpart(y_intersect));
 				uint8_t intensity = (uint8_t)(255.0 * fpart(y_intersect));
 
@@ -154,27 +154,27 @@ void vline(Image *image, int x, float y0, float y1, uint8_t r, uint8_t g, uint8_
 	// starting to draw the first endpoint
 	float y_gap = rfpart(y0 + 0.5);
 	float x_pixel1 = (float)x;
-	float y_pixel1 = floorf(y0);
+	float y_pixel1 = roundf(y0);
 
 	uint8_t r_intensity = (uint8_t)(255.0 *  (1.0 - y_gap));
 	uint8_t intensity = (uint8_t)(255.0 * y_gap);
 
-	point_i(image, x_pixel1, y_pixel1, r_intensity, r_intensity, r_intensity);
-	point_i(image, x_pixel1, y_pixel1+1, intensity,   intensity,   intensity);
+	point_i(image, x_pixel1, y_pixel1+1, r_intensity, r_intensity, r_intensity);
+	point_i(image, x_pixel1, y_pixel1, intensity,   intensity,   intensity);
 
 	// drawing the second endpoint
 	y_gap = fpart(y1 + 0.5);
 	float x_pixel2 = (float)x;
-	float y_pixel2 = floorf(y1);
+	float y_pixel2 = roundf(y1);
 
 	r_intensity = (uint8_t)(255.0 *  (1.0 - y_gap));
 	intensity = (uint8_t)(255.0 * y_gap);
 
-	point_i(image, x_pixel2, y_pixel2, r_intensity, r_intensity, r_intensity);
-	point_i(image, x_pixel2, y_pixel2+1, intensity,   intensity,   intensity);
+	point_i(image, x_pixel2, y_pixel2-1, r_intensity, r_intensity, r_intensity);
+	point_i(image, x_pixel2, y_pixel2, intensity,   intensity,   intensity);
 
 	// main loop
-	for (float y = y_pixel1 + 1.0; y < y_pixel2 - 1; y += 1.0) {
+	for (float y = y_pixel1 + 1.0; y < y_pixel2 ; y += 1.0) {
 		uint8_t intensity = 255;
 		point_i(image, x, y, intensity, intensity, intensity);
 	}
@@ -188,6 +188,9 @@ void left_triangle_f(Image *image, Point p0, Point p1, Point p2) {
 	float current_y0 = p0.y;
 	float current_y1 = p0.y;
 
+	printf("p0: %f, %f \n", p0.x, p0.y);
+	printf("p1: %f, %f \n", p1.x, p1.y);
+	printf("p2: %f, %f \n", p2.x, p2.y);
 	for (int x = p0.x; x <= p1.x; x++)
 	{
 		// drawLine((int)curx1, scanlineY, (int)curx2, scanlineY);
@@ -219,19 +222,19 @@ void triangle_f(Image *image, Point p0, Point p1, Point p2) {
 	
 	Point intermediary;
 
-	if (p0.x < p1.x) {
+	if (p0.x > p1.x) {
 		intermediary = p0;
 		p0 = p1;
 		p1 = intermediary;
 	} 
 
-	if (p0.x < p2.x) {
+	if (p0.x > p2.x) {
 		intermediary = p0;
 		p0 = p2;
 		p2 = intermediary;
 	} 
 	
-	if (p1.x < p2.x) {
+	if (p1.x > p2.x) {
 		intermediary = p1;
 		p1 = p2;
 		p2 = intermediary;
@@ -242,8 +245,14 @@ void triangle_f(Image *image, Point p0, Point p1, Point p2) {
 	Point p3;
 	p3.y = p0.y + ((p1.x - p0.x) / (p2.x - p0.x)) * (p2.y - p0.y);
 	p3.x = p1.x;
+
+
 	left_triangle_f(image, p0, p1, p3);
 	right_triangle_f(image, p1, p3, p2);
+	point_i(image, p0.x, p0.y, 255, 0, 0);
+	point_i(image, p1.x, p1.y, 255, 0, 0);
+	point_i(image, p2.x, p2.y, 255, 0, 0);
+	point_i(image, p3.x, p3.y, 255, 0, 255);
 }
 
 

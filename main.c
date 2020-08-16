@@ -34,14 +34,14 @@ int main(int argc, char** argv) {
 			// double y = (double)0.5;
 
 			int index = y_cell * (x_points) + x_cell;
-			point_cloud[index].x = (x_cell + x)/(double)x_points;
-			point_cloud[index].y = (y_cell + y)/(double)y_points;
+			point_cloud[index].x = (x_cell + x)/(double)x_points * RESOLUTION_X;
+			point_cloud[index].y = (y_cell + y)/(double)y_points * RESOLUTION_Y;
 		}
 	}
 
-	line_f(image, point_cloud[0].x * RESOLUTION_X, point_cloud[0].y * RESOLUTION_Y, point_cloud[1].x * RESOLUTION_X, point_cloud[1].y * RESOLUTION_Y, 255,255,255);
-	line_f(image, point_cloud[1].x * RESOLUTION_X, point_cloud[1].y * RESOLUTION_Y, point_cloud[2].x * RESOLUTION_X, point_cloud[2].y * RESOLUTION_Y, 255,255,255);
-	line_f(image, point_cloud[2].x * RESOLUTION_X, point_cloud[2].y * RESOLUTION_Y, point_cloud[0].x * RESOLUTION_X, point_cloud[0].y * RESOLUTION_Y, 255,255,255);
+	// line_f(image, point_cloud[0].x * RESOLUTION_X, point_cloud[0].y * RESOLUTION_Y, point_cloud[1].x * RESOLUTION_X, point_cloud[1].y * RESOLUTION_Y, 255,255,255);
+	// line_f(image, point_cloud[1].x * RESOLUTION_X, point_cloud[1].y * RESOLUTION_Y, point_cloud[2].x * RESOLUTION_X, point_cloud[2].y * RESOLUTION_Y, 255,255,255);
+	// line_f(image, point_cloud[2].x * RESOLUTION_X, point_cloud[2].y * RESOLUTION_Y, point_cloud[0].x * RESOLUTION_X, point_cloud[0].y * RESOLUTION_Y, 255,255,255);
 	// line_f(image, point_cloud[0].x * RESOLUTION_X, point_cloud[0].y * RESOLUTION_Y, point_cloud[3].x * RESOLUTION_X, point_cloud[3].y * RESOLUTION_Y, 255,255,255);
 	// line_f(image, point_cloud[1].x * RESOLUTION_X, point_cloud[1].y * RESOLUTION_Y, point_cloud[3].x * RESOLUTION_X, point_cloud[3].y * RESOLUTION_Y, 255,255,255);
 	// line_f(image, point_cloud[2].x * RESOLUTION_X, point_cloud[2].y * RESOLUTION_Y, point_cloud[3].x * RESOLUTION_X, point_cloud[3].y * RESOLUTION_Y, 255,255,255);
