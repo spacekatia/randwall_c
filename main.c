@@ -39,14 +39,17 @@ int main(int argc, char** argv) {
 		}
 	}
 
-	// line_f(image, point_cloud[0].x * RESOLUTION_X, point_cloud[0].y * RESOLUTION_Y, point_cloud[1].x * RESOLUTION_X, point_cloud[1].y * RESOLUTION_Y, 255,255,255);
-	// line_f(image, point_cloud[1].x * RESOLUTION_X, point_cloud[1].y * RESOLUTION_Y, point_cloud[2].x * RESOLUTION_X, point_cloud[2].y * RESOLUTION_Y, 255,255,255);
-	// line_f(image, point_cloud[2].x * RESOLUTION_X, point_cloud[2].y * RESOLUTION_Y, point_cloud[0].x * RESOLUTION_X, point_cloud[0].y * RESOLUTION_Y, 255,255,255);
+	line_f(image, point_cloud[0].x , point_cloud[0].y , point_cloud[1].x , point_cloud[1].y , 255,0,0);
+	line_f(image, point_cloud[1].x , point_cloud[1].y , point_cloud[2].x , point_cloud[2].y , 255,0,0);
+	line_f(image, point_cloud[2].x , point_cloud[2].y , point_cloud[0].x , point_cloud[0].y , 255,0,0);
 	// line_f(image, point_cloud[0].x * RESOLUTION_X, point_cloud[0].y * RESOLUTION_Y, point_cloud[3].x * RESOLUTION_X, point_cloud[3].y * RESOLUTION_Y, 255,255,255);
 	// line_f(image, point_cloud[1].x * RESOLUTION_X, point_cloud[1].y * RESOLUTION_Y, point_cloud[3].x * RESOLUTION_X, point_cloud[3].y * RESOLUTION_Y, 255,255,255);
 	// line_f(image, point_cloud[2].x * RESOLUTION_X, point_cloud[2].y * RESOLUTION_Y, point_cloud[3].x * RESOLUTION_X, point_cloud[3].y * RESOLUTION_Y, 255,255,255);
 
-	triangle_f(image, point_cloud[0], point_cloud[1], point_cloud[2]);
+	triangle_f(image, point_cloud[0], point_cloud[1], point_cloud[2], 0, 0, 255);
+	line_f(image, point_cloud[0].x , point_cloud[0].y , point_cloud[1].x , point_cloud[1].y , 255,0,0);
+	line_f(image, point_cloud[1].x , point_cloud[1].y , point_cloud[2].x , point_cloud[2].y , 255,0,0);
+	line_f(image, point_cloud[2].x , point_cloud[2].y , point_cloud[0].x , point_cloud[0].y , 255,0,0);
 
 	unsigned char* bmp;
 	int size = create_bitmap(image->data, RESOLUTION_X, RESOLUTION_Y, &bmp);

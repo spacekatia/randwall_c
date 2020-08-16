@@ -84,15 +84,19 @@ void line_f(Image *image, float x0, float y0, float x1, float y1, uint8_t r, uin
 	float x_pixel1 = x_end;
 	float y_pixel1 = floorf(y_end);
 
-	uint8_t r_intensity = (uint8_t)(255.0 * rfpart(y_end) * x_gap);
-	uint8_t intensity = (uint8_t)(255.0 * fpart(y_end) * x_gap);
+	uint8_t r_intensity_r = (uint8_t)((float)r * rfpart(y_end) * x_gap);
+	uint8_t r_intensity_g = (uint8_t)((float)g * rfpart(y_end) * x_gap);
+	uint8_t r_intensity_b = (uint8_t)((float)b * rfpart(y_end) * x_gap);
+	uint8_t intensity_r = (uint8_t)((float)r * fpart(y_end) * x_gap);
+	uint8_t intensity_g = (uint8_t)((float)g * fpart(y_end) * x_gap);
+	uint8_t intensity_b = (uint8_t)((float)b * fpart(y_end) * x_gap);
 
 	if (steep) {
-		point_i(image, y_pixel1, x_pixel1, r_intensity, r_intensity, r_intensity);
-		point_i(image, y_pixel1+1, x_pixel1, intensity,   intensity,   intensity);
+		point_i(image, y_pixel1, x_pixel1, r_intensity_r, r_intensity_g, r_intensity_b);
+		point_i(image, y_pixel1+1, x_pixel1, intensity_r,   intensity_g,   intensity_b);
 	} else {
-		point_i(image, x_pixel1, y_pixel1, r_intensity, r_intensity, r_intensity);
-		point_i(image, x_pixel1, y_pixel1+1, intensity,   intensity,   intensity);
+		point_i(image, x_pixel1, y_pixel1, r_intensity_r, r_intensity_g, r_intensity_b);
+		point_i(image, x_pixel1, y_pixel1+1, intensity_r,   intensity_g,   intensity_b);
 	}
 
 	float y_intersect = y_end + gradient; // first y-intersection with the pixel grid
@@ -106,36 +110,48 @@ void line_f(Image *image, float x0, float y0, float x1, float y1, uint8_t r, uin
 	float x_pixel2 = x_end;
 	float y_pixel2 = floorf(y_end);
 
-	r_intensity = (uint8_t)(255.0 * rfpart(y_end) * x_gap);
-	intensity = (uint8_t)(255.0 * fpart(y_end) * x_gap);
+	r_intensity_r = (uint8_t)((float)r * rfpart(y_end) * x_gap);
+	r_intensity_g = (uint8_t)((float)g * rfpart(y_end) * x_gap);
+	r_intensity_b = (uint8_t)((float)b * rfpart(y_end) * x_gap);
+	intensity_r = (uint8_t)((float)r * fpart(y_end) * x_gap);
+	intensity_g = (uint8_t)((float)g * fpart(y_end) * x_gap);
+	intensity_b = (uint8_t)((float)b * fpart(y_end) * x_gap);
 
 	if (steep) {
-		point_i(image, y_pixel2, x_pixel2, r_intensity, r_intensity, r_intensity);
-		point_i(image, y_pixel2+1, x_pixel2, intensity,   intensity,   intensity);
+		point_i(image, y_pixel2, x_pixel2, r_intensity_r, r_intensity_g, r_intensity_b);
+		point_i(image, y_pixel2+1, x_pixel2, intensity_r,   intensity_g,   intensity_b);
 	} else {
-		point_i(image, x_pixel2, y_pixel2, r_intensity, r_intensity, r_intensity);
-		point_i(image, x_pixel2, y_pixel2+1, intensity,   intensity,   intensity);
+		point_i(image, x_pixel2, y_pixel2, r_intensity_r, r_intensity_g, r_intensity_b);
+		point_i(image, x_pixel2, y_pixel2+1, intensity_r,   intensity_g,   intensity_b);
 	}
 
 	// main loop
 
 	if (steep) {
 		for (float x = x_pixel1 + 1.0; x < x_pixel2; x += 1.0) {
-				uint8_t r_intensity = (uint8_t)(255.0 * rfpart(y_intersect));
-				uint8_t intensity = (uint8_t)(255.0 * fpart(y_intersect));
+				r_intensity_r = (uint8_t)((float)r * rfpart(y_intersect));
+				r_intensity_g = (uint8_t)((float)g * rfpart(y_intersect));
+				r_intensity_b = (uint8_t)((float)b * rfpart(y_intersect));
+				intensity_r = (uint8_t)((float)r * fpart(y_intersect));
+				intensity_g = (uint8_t)((float)g * fpart(y_intersect));
+				intensity_b = (uint8_t)((float)b * fpart(y_intersect));
 
-				point_i(image, y_intersect, x, r_intensity, r_intensity, r_intensity);
-				point_i(image, y_intersect + 1, x, intensity, intensity, intensity);
+				point_i(image, y_intersect,     x, r_intensity_r, r_intensity_g, r_intensity_b);
+				point_i(image, y_intersect + 1, x,   intensity_r,   intensity_g,   intensity_b);
 
 				y_intersect += gradient;
 		}
 	} else {
 		for (float x = x_pixel1 + 1.0; x < x_pixel2; x += 1.0) {
-				uint8_t r_intensity = (uint8_t)(255.0 * rfpart(y_intersect));
-				uint8_t intensity = (uint8_t)(255.0 * fpart(y_intersect));
+				r_intensity_r = (uint8_t)((float)r * rfpart(y_intersect));
+				r_intensity_g = (uint8_t)((float)g * rfpart(y_intersect));
+				r_intensity_b = (uint8_t)((float)b * rfpart(y_intersect));
+				intensity_r = (uint8_t)((float)r * fpart(y_intersect));
+				intensity_g = (uint8_t)((float)g * fpart(y_intersect));
+				intensity_b = (uint8_t)((float)b * fpart(y_intersect));
 
-				point_i(image, x, y_intersect, r_intensity, r_intensity, r_intensity);
-				point_i(image, x, y_intersect + 1, intensity, intensity, intensity);
+				point_i(image, x, y_intersect,   r_intensity_r, r_intensity_g, r_intensity_b);
+				point_i(image, x, y_intersect + 1, intensity_r,   intensity_g,   intensity_b);
 
 				y_intersect += gradient;
 		}
@@ -156,32 +172,39 @@ void vline(Image *image, int x, float y0, float y1, uint8_t r, uint8_t g, uint8_
 	float x_pixel1 = (float)x;
 	float y_pixel1 = roundf(y0);
 
-	uint8_t r_intensity = (uint8_t)(255.0 *  (1.0 - y_gap));
-	uint8_t intensity = (uint8_t)(255.0 * y_gap);
+	uint8_t r_intensity_r = (uint8_t)((float)r * (1.0 - y_gap));
+	uint8_t r_intensity_g = (uint8_t)((float)g * (1.0 - y_gap));
+	uint8_t r_intensity_b = (uint8_t)((float)b * (1.0 - y_gap));
+	uint8_t intensity_r = (uint8_t)((float)r * y_gap);
+	uint8_t intensity_g = (uint8_t)((float)g * y_gap);
+	uint8_t intensity_b = (uint8_t)((float)b * y_gap);
 
-	point_i(image, x_pixel1, y_pixel1+1, r_intensity, r_intensity, r_intensity);
-	point_i(image, x_pixel1, y_pixel1, intensity,   intensity,   intensity);
+	point_i(image, x_pixel1, y_pixel1+1, r_intensity_r, r_intensity_g, r_intensity_b);
+	point_i(image, x_pixel1, y_pixel1, intensity_r,   intensity_g,   intensity_b);
 
 	// drawing the second endpoint
 	y_gap = fpart(y1 + 0.5);
 	float x_pixel2 = (float)x;
 	float y_pixel2 = roundf(y1);
 
-	r_intensity = (uint8_t)(255.0 *  (1.0 - y_gap));
-	intensity = (uint8_t)(255.0 * y_gap);
+	r_intensity_r = (uint8_t)((float)r *  (1.0 - y_gap));
+	r_intensity_g = (uint8_t)((float)g *  (1.0 - y_gap));
+	r_intensity_b = (uint8_t)((float)b *  (1.0 - y_gap));
+	intensity_r = (uint8_t)((float)r * y_gap);
+	intensity_g = (uint8_t)((float)g * y_gap);
+	intensity_b = (uint8_t)((float)b * y_gap);
 
-	point_i(image, x_pixel2, y_pixel2-1, r_intensity, r_intensity, r_intensity);
-	point_i(image, x_pixel2, y_pixel2, intensity,   intensity,   intensity);
+	point_i(image, x_pixel2, y_pixel2-1, r_intensity_r, r_intensity_g, r_intensity_b);
+	point_i(image, x_pixel2, y_pixel2, intensity_r,   intensity_g,   intensity_b);
 
 	// main loop
 	for (float y = y_pixel1 + 1.0; y < y_pixel2 ; y += 1.0) {
-		uint8_t intensity = 255;
-		point_i(image, x, y, intensity, intensity, intensity);
+		point_i(image, x, y, r, g, b);
 	}
 
 }
 
-void left_triangle_f(Image *image, Point p0, Point p1, Point p2) {
+void left_triangle_f(Image *image, Point p0, Point p1, Point p2, uint8_t r, uint8_t g, uint8_t b) {
 	float slope0 = (p1.y - p0.y) / (p1.x - p0.x);
 	float slope1 = (p2.y - p0.y) / (p2.x - p0.x);
 
@@ -194,13 +217,13 @@ void left_triangle_f(Image *image, Point p0, Point p1, Point p2) {
 	for (int x = p0.x; x <= p1.x; x++)
 	{
 		// drawLine((int)curx1, scanlineY, (int)curx2, scanlineY);
-		vline(image, x, current_y0, current_y1, 255, 255, 255);
+		vline(image, x, current_y0, current_y1, r, g ,b);
 		current_y0 += slope0;
 		current_y1 += slope1;
 	}
 }
 
-void right_triangle_f(Image *image, Point p0, Point p1, Point p2) {
+void right_triangle_f(Image *image, Point p0, Point p1, Point p2, uint8_t r, uint8_t g, uint8_t b) {
 	float slope0 = (p2.y - p0.y) / (p2.x - p0.x);
 	float slope1 = (p2.y - p1.y) / (p2.x - p1.x);
 
@@ -210,14 +233,14 @@ void right_triangle_f(Image *image, Point p0, Point p1, Point p2) {
 	for (int x = p0.x; x <= p2.x; x++)
 	{
 		// drawLine((int)curx1, scanlineY, (int)curx2, scanlineY);
-		vline(image, x, current_y0, current_y1, 255, 255, 255);
+		vline(image, x, current_y0, current_y1, r, g ,b);
 		current_y0 += slope0;
 		current_y1 += slope1;
 	}
 }
 
 
-void triangle_f(Image *image, Point p0, Point p1, Point p2) {
+void triangle_f(Image *image, Point p0, Point p1, Point p2, uint8_t r, uint8_t g, uint8_t b) {
 	/* at first sort the three vertices by x-coordinate ascending so v1 is the topmost vertice */
 	
 	Point intermediary;
@@ -247,12 +270,14 @@ void triangle_f(Image *image, Point p0, Point p1, Point p2) {
 	p3.x = p1.x;
 
 
-	left_triangle_f(image, p0, p1, p3);
-	right_triangle_f(image, p1, p3, p2);
-	point_i(image, p0.x, p0.y, 255, 0, 0);
-	point_i(image, p1.x, p1.y, 255, 0, 0);
-	point_i(image, p2.x, p2.y, 255, 0, 0);
-	point_i(image, p3.x, p3.y, 255, 0, 255);
+	left_triangle_f(image, p0, p1, p3, r, g, b);
+	right_triangle_f(image, p1, p3, p2, r, g, b);
+
+	// Debug Points
+	// point_i(image, p0.x, p0.y, 255, 0, 0);
+	// point_i(image, p1.x, p1.y, 255, 0, 0);
+	// point_i(image, p2.x, p2.y, 255, 0, 0);
+	// point_i(image, p3.x, p3.y, 255, 0, 255);
 }
 
 

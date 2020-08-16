@@ -17,7 +17,7 @@ typedef struct Point{
 
 
 void line_f(Image *image, float x0, float y0, float x1, float y1, uint8_t r, uint8_t g, uint8_t b);
-void triangle_f(Image *image, Point p0, Point p1, Point p2);
+void triangle_f(Image *image, Point p0, Point p1, Point p2, uint8_t r, uint8_t g, uint8_t b);
 Image *create_image(unsigned int width, unsigned int height);
 
 #endif
